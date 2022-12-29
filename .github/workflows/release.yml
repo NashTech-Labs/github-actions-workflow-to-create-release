@@ -1,0 +1,29 @@
+name: Release
+
+on:
+  workflow_dispatch
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: ncipollo/release-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag: your-tag
+          name: Your title
+          body: Your body
+          draft: false
+          prerelease: false
